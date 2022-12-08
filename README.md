@@ -22,6 +22,10 @@ docker-compose up -d
 ```
 npm run start:dev
 ```
+7. Populate the database
+```
+http://localhost:3000/api/seed
+```
 
 ## Stack
 * Nest
