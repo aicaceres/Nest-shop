@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -19,12 +19,12 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
+      useFactory: () => {
         // use process.env directly or configService to inject the enviroment variable
-        // const secret = process.env.JWT_SECRET;
-        const secret = configService.get('JWT_SECRET');
+        //const secret = process.env.JWT_SECRET;
+        //const secret = configService.get('JWT_SECRET');
         return {
-          secret: secret,
+          secret: process.env.JWT_SECRET,
           signOptions: {
             expiresIn: '3h',
           },
