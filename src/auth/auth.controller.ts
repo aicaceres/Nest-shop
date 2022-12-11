@@ -1,3 +1,4 @@
+import { IncomingHttpHeaders } from 'http';
 import {
   Controller,
   Get,
@@ -5,13 +6,15 @@ import {
   Body,
   UseGuards,
   Headers,
+  SetMetadata,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { IncomingHttpHeaders } from 'http';
+
 import { AuthService } from './auth.service';
 import { GetUser, GetRawHeaders } from './decorators';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { User } from './entities/user.entity';
+import { UserRoleGuard } from './guards/user-role.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +30,7 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
+  // Private rout to get user and headers from request
   @Get('private')
   @UseGuards(AuthGuard())
   testingPrivateRoute(
@@ -38,5 +42,16 @@ export class AuthController {
     @Headers() headers: IncomingHttpHeaders,
   ) {
     return headers;
+  }
+
+  // Private route to check if user get role
+  @Get('privatebyrole')
+  @SetMetadata('roles', ['admin', 'super-user'])
+  @UseGuards(AuthGuard(), UserRoleGuard)
+  testingPrivateRouteByRole(
+    // get User custom decorator
+    @GetUser('email') user: User,
+  ) {
+    return user;
   }
 }
