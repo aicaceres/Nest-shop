@@ -59,6 +59,12 @@ export class AuthService {
     };
   }
 
+  async checkStatus(user: User) {
+    return {
+      token: this.getJwtToken({ id: user.id }),
+    };
+  }
+
   private handleDBExceptions(error: any): never {
     if (error.code === '23505') throw new BadRequestException(error.detail);
     this.logger.error(error);
