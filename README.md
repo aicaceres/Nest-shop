@@ -31,3 +31,9 @@ http://localhost:3000/api/seed
 * Nest
 * Postgres
 * Docker
+
+## Documentation
+Partial implementation with **Swagger** on product endpoint
+```
+http://localhost:3000/api
+```
