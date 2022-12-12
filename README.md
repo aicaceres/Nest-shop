@@ -16,7 +16,7 @@ npm install
 ```
 docker-compose up -d
 ```
-4. Clone __.en.template__ file and rename to __.env__
+4. Clone __.env.template__ file and rename to __.env__
 5. Fill in the variables with the respective values
 6. Run in dev
 ```
